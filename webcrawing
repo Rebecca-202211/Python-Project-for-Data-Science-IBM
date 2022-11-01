@@ -3,6 +3,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 url = "https://en.wikipedia.org/wiki/World_population"
+#method1
 data = requests.get(url).text
 soup = BeautifulSoup(data, "html.parser")
 tables = soup.find_all('table')
@@ -28,3 +29,13 @@ for row in tables[table_index].tbody.find_all("tr"):
         pop_rank = pop_rank.append({'Rank': rank, 'Country': country, 'Population': pop, 'Area': area, 'Density': dense,
                                     'Population trend': pop_trend},ignore_index=True)
 pop_rank
+#method2
+for index, table in enumerate(tables):
+    if 'Countries ranking highly in both total population' in str(table):
+        table_index = index
+        
+dataframe_list[6]
+
+#method3
+var = pd.read_html(url, match="Countries ranking highly in both total population", flavor='bs4')[0]
+print(var)
